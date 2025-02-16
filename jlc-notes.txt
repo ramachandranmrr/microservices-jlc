@@ -10,7 +10,7 @@ master - base code v1.0
 		- userrating (swagger, RestTemplate-url-port, db-schema)
 			run -  price, search, placeorder, userrating, bookstore-web (jsp)
 			
-branch: bookstore-actuators-admin v1.1
+branch: bookstore-actuators v1.1
 		- actuators? count it
 		- bookprice	(added actuator)
 		- booksearch (added actuator)
@@ -20,4 +20,14 @@ branch: bookstore-actuators-admin v1.1
 			run -  price, search, placeorder, userrating, bookstore-web (jsp)
 
 master - adminserver
-		- 
+
+branch: bookstore-admin v1.1
+		- taken master then bookstore-actuators v1.1, 
+		- adminserver
+		- bookprice	(added admin-starter-client)
+		- booksearch (added admin-starter-client)
+		- bookstore-web
+		- placeorder (added admin-starter-client
+		- userrating (added admin-starter-client)
+			run -  price, search, placeorder, userrating, bookstore-web (jsp)
+		
