@@ -30,13 +30,22 @@ branch: bookstore-admin v1.1
 		- placeorder (added admin-starter-client
 		- userrating (added admin-starter-client)
 			run -  price, search, placeorder, userrating, bookstore-web (jsp)
-
-branch: bookstore-rabbitmq (please read notes in the branch)
+		
+branch: bookstore-rabbitmq v1.2 (please read notes in the branch)
 		- adminserver
 		- bookprice	(v1.1)
 		- booksearch (v1.2) - rabbitmq
 		- bookstore-web (v1.2) - rabbitmq
-		- placeorder (v1.2) - rabbitmq
+		- placeorder (v1.2) -  (rabbitmq, RestTemplate-url-port)
 		- userrating (v1.2) - rabbitmq
 			run -  price, search, placeorder, userrating, bookstore-web (jsp)
-		
+			
+branch: bookstore-feign v1.3 (copy of bookstore-rabbitmq v1.2)
+		- adminserver
+		- bookprice
+		- booksearch (feign, url-port)
+		- bookstore-web (feig, url-port)
+		- placeorder
+		- userrating
+			run -  price, search, placeorder, userrating, bookstore-web (jsp)
+		- note- eclipse - creating another instance: session14: 40 (time)
