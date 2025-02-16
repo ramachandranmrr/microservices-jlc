@@ -19,4 +19,5 @@ branch: bookstore-actuators-admin v1.1
 		- userrating (added actuator)
 			run -  price, search, placeorder, userrating, bookstore-web (jsp)
 
-			
+master - adminserver
+		- 
