@@ -30,4 +30,13 @@ branch: bookstore-admin v1.1
 		- placeorder (added admin-starter-client
 		- userrating (added admin-starter-client)
 			run -  price, search, placeorder, userrating, bookstore-web (jsp)
+
+branch: bookstore-rabbitmq (please read notes in the branch)
+		- adminserver
+		- bookprice	(v1.1)
+		- booksearch (v1.2) - rabbitmq
+		- bookstore-web (v1.2) - rabbitmq
+		- placeorder (v1.2) - rabbitmq
+		- userrating (v1.2) - rabbitmq
+			run -  price, search, placeorder, userrating, bookstore-web (jsp)
 		
