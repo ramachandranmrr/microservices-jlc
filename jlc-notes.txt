@@ -1,0 +1,14 @@
+microservices-jlc
+
+Java17 + spring boot 3.4.2
+
+master - base code v1.0   
+		- bookprice	(swagger, CORS?, db-schema)
+		- booksearch (swagger, RestTemplate-url-port, dbschema)
+		- bookstore-web (no-swagger, web-config, RestTemplate-url-port, 
+		- placeorder (swagger, RestTemplate-url-port, db-schema)
+		- userrating (swagger, RestTemplate-url-port, db-schema)
+			run -  price, search, placeorder, userrating, bookstore-web (jsp)
+			
+branch: 
+			
