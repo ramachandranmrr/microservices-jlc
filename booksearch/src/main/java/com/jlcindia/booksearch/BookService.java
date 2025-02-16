@@ -7,7 +7,4 @@ public interface BookService {
 
 	public BookInfo getBookInfo(Integer bookId);
 
-	public void updateBookRating(BookRating bookRating);
-
-	public void updateBookInventory(BookInventory bookInventory);
 }

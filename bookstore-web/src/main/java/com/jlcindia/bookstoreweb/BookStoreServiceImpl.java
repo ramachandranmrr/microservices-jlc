@@ -10,13 +10,23 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import com.jlcindia.rabbitmq.OrderFullInfo;
+import com.jlcindia.rabbitmq.OrderInfo;
+import com.jlcindia.rabbitmq.OrderItemInfo;
+import com.jlcindia.rabbitmq.UserRatingInfo;
 
 @Service
 public class BookStoreServiceImpl implements BookStoreService {
 	static Logger log = LoggerFactory.getLogger(BookStoreServiceImpl.class);
 	Map<Integer, Book> booksMap = new LinkedHashMap<>();
+	
+	@Autowired
+	private RabbitTemplate rabbitTemplate;
 
 	public List<String> getAuthorsList() {
 		List<String> authorsList = new ArrayList<>();
@@ -36,6 +46,7 @@ public class BookStoreServiceImpl implements BookStoreService {
 	}
 
 	public List<Book> getMyBooks(String author, String category) {
+		
 		System.out.println("BookStoreServiceImpl - getBooks()");
 		if (author == null || author.length() == 0) {
 			author = "All Authors";
@@ -54,10 +65,12 @@ public class BookStoreServiceImpl implements BookStoreService {
 			booksMap.put(mybook.getBookId(), mybook);
 		}
 		return bookList;
+
 	}
 	
 	public BookInfo getBookInfoByBookId(Integer bookId) {
 		System.out.println("BookStoreServiceImpl - getBookInfoByBookId()");
+		// Invoke BookSearchMS
 		RestTemplate bookSearchRest = new RestTemplate();
 		String endpoint = "http://localhost:8000/mybook/" + bookId;
 		BookInfo bookInfo = bookSearchRest.getForObject(endpoint, BookInfo.class);
@@ -72,32 +85,37 @@ public class BookStoreServiceImpl implements BookStoreService {
 	}
 	
 	public void placeOrder(Map<Integer, Book> mycartMap) {
-		List<OrderItem> itemList = new ArrayList<>();
+		// New Code
+		System.out.println("---2.BookStoreServiceImpl--placeOrder()----");
+		List<OrderItemInfo> itemList = new ArrayList<>();
 		double totalPrice = 0.0;
 		int totalQuantity = 0;
 		for (Book mybook : mycartMap.values()) {
-			Integer bookId = mybook.getBookId();
-			// Invoke BookPrice Controller
-			RestTemplate bookPriceRest = new RestTemplate();
-			String priceEndpoint = "http://localhost:9000/offeredPrice/" + bookId;
-			double offerPrice = bookPriceRest.getForObject(priceEndpoint, Double.class);
-			OrderItem item = new OrderItem(0, bookId, 1, offerPrice);
-			itemList.add(item);
-			totalPrice = totalPrice + offerPrice;
-			totalQuantity = totalQuantity + 1;
+		Integer bookId = mybook.getBookId();
+		
+		// Invoke BookPrice MS
+		RestTemplate bookPriceRest = new RestTemplate();
+		String priceEndpoint = "http://localhost:9000/offeredPrice/" + bookId;
+		double offerPrice = bookPriceRest.getForObject(priceEndpoint, Double.class);
+		
+		OrderItemInfo item = new OrderItemInfo(0, bookId, 1, offerPrice);
+		itemList.add(item);
+		totalPrice = totalPrice + offerPrice;
+		totalQuantity = totalQuantity + 1;
 		}
 		Date today = Calendar.getInstance().getTime();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
 		String orderDate = formatter.format(today);
 		System.out.println(orderDate);
-		Order order = new Order(orderDate, "U-111", totalQuantity, totalPrice, "New");
-		OrderInfo orderInfo = new OrderInfo();
-		orderInfo.setOrder(order);
-		orderInfo.setItemsList(itemList);
-		// Invoke PlaceOrder MS
-		String orderEndpoint = "http://localhost:7000/placeOrder";
-		RestTemplate orderRest = new RestTemplate();
-		orderRest.put(orderEndpoint, orderInfo);
+		OrderInfo orderInfo = new OrderInfo(orderDate, "U-111", totalQuantity, totalPrice, "New");
+		
+		OrderFullInfo orderFullInfo = new OrderFullInfo();
+		orderFullInfo.setOrder(orderInfo);
+		orderFullInfo.setItemsList(itemList);
+		
+		// Sending Order Message to RabbitMQ
+		rabbitTemplate.convertAndSend("myorder.exchange","myorder.key",
+		orderFullInfo);
 		System.out.println("Order Placed");
 	}
 	
@@ -111,10 +129,12 @@ public class BookStoreServiceImpl implements BookStoreService {
 	}
 	
 	public void addUserRating(UserRating userRating) {
-		// Invoke UserRating MS
-		String ratingEndpoint = "http://localhost:6500/addUserRating";
-		RestTemplate ratingRest = new RestTemplate();
-		ratingRest.put(ratingEndpoint, userRating);
+		System.out.println("---2.BookStoreServiceImpl--addUserRating()----");
+		//Sending UserRating Message RabbitMQ
+		UserRatingInfo userRatingInfo=new UserRatingInfo(userRating.getUserId(),
+		userRating.getBookId(), userRating.getRating(), userRating.getReview());
+		rabbitTemplate.convertAndSend("myuser.ratings.exchange","myuser.ratings.key",
+		userRatingInfo);
 		System.out.println("Rating Added");
 	}
 	

@@ -5,5 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BookRatingDAO extends JpaRepository<BookRating, Integer> {
-public BookRating findBookRatingByBookId(Integer bookId);
+	
+	public BookRating findBookRatingByBookId(Integer bookId);
+	
 }

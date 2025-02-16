@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+
+import com.jlcindia.rabbitmq.BookInventoryInfo;
 
 import jakarta.transaction.Transactional;
 
@@ -22,10 +25,13 @@ public class OrderServiceImpl implements OrderService {
 	OrderItemDAO orderItemDAO;
 	@Autowired
 	BookInventoryDAO bookInventoryDAO;
+	
+	@Autowired
+	private RabbitTemplate rabbitTemplate;
 
-	@Override
+	@RabbitListener(queues = "myorder.queue")
 	public void placeOrder(OrderInfo orderInfo) {
-		log.info("---OrderServiceImpl---placeOrder()-----");
+		log.info("--3.OrderServiceImpl---placeOrder()-----");
 		
 		//1. Save the Order
 		Order myorder = orderInfo.getOrder();
@@ -39,18 +45,26 @@ public class OrderServiceImpl implements OrderService {
 		}
 		
 		//3.Update Inventory at Two Places
-		RestTemplate bookSearchRest = new RestTemplate();
-		String endpoint = "http://localhost:8000/updateBookInventory";
-		for (OrderItem myitem : orderInfo.getItemsList()) {
-			Integer bookId = myitem.getBookId();
-			BookInventory bookInventory = bookInventoryDAO.findById(bookId).get();
-			bookInventory.setBooksAvailable(bookInventory.getBooksAvailable() - 1);
+		// RestTemplate bookSearchRest = new RestTemplate();
+		// String endpoint = "http://localhost:8000/updateBookInventory";
+		for (OrderItem orderItemInfo : orderInfo.getItemsList()) {
+			Integer bookId=orderItemInfo.getBookId();
+			BookInventory mybookInventory = bookInventoryDAO.findById(bookId).get();
+			Integer currentStock=mybookInventory.getBooksAvailable();
+			currentStock = currentStock - orderItemInfo.getQty();
+			mybookInventory.setBooksAvailable(currentStock);
 			
-			//3A. Update Inventory of PlaceOrderMS Locally
-			bookInventoryDAO.save(bookInventory);
+			// Update Local Inventory
+			bookInventoryDAO.save(mybookInventory);
 			
-			//3B. Update Inventory of BookSearchMS Remotely
-			bookSearchRest.put(endpoint, bookInventory);
+			//Update Inventory of BookSearchMS by Sending Message
+			BookInventoryInfo bookInventoryInfo=new BookInventoryInfo();
+			bookInventoryInfo.setBookId(mybookInventory.getBookId());
+			bookInventoryInfo.setBooksAvailable(mybookInventory.getBooksAvailable());
+			
+			rabbitTemplate.convertAndSend("mybook.search.exchange",
+						"myinventory.key", bookInventoryInfo);
+			
 		}
 	}
 
@@ -62,3 +76,4 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 }
+

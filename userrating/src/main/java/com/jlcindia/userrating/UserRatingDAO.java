@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRatingDAO extends JpaRepository<UserRating, Integer> {
+	
 	public List<UserRating> findUserRatingByBookId(Integer bookId);
 
 	public List<UserRating> findUserRatingByUserId(String userId);
+	
 }

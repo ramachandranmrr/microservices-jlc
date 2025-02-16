@@ -1,5 +1,12 @@
 package com.jlcindia.placeorder;
 
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Exchange;
+import org.springframework.amqp.core.ExchangeBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -14,6 +21,28 @@ import io.swagger.v3.oas.models.info.License;
 // https://www.bezkoder.com/spring-boot-swagger-3/#google_vignette
 @SpringBootApplication
 public class PlaceOrderConfig implements WebMvcConfigurer {
+
+	// Order Message
+	// A. Order Exchange
+	@Bean(name = "myOrderExchange")
+	Exchange createOrderExchange() {
+		return ExchangeBuilder.topicExchange("myorder.exchange").build();
+	}
+
+	// B. Order Queue
+	@Bean(name = "myOrderQueue")
+	Queue createOrderQueue() {
+		return QueueBuilder.durable("myorder.queue").build();
+	}
+
+	// C. Order Binding
+	@Bean
+	Binding orderBinding(Queue myOrderQueue, TopicExchange myOrderExchange) {
+		return BindingBuilder
+				.bind(myOrderQueue)
+				.to(myOrderExchange)
+				.with("myorder.key");
+	}
 
 	@Bean
     public OpenAPI customOpenAPI() {
@@ -36,8 +65,10 @@ public class PlaceOrderConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/METAINF/resources/");
-		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/METAINF/resources/webjars/");
+		registry.addResourceHandler("swagger-ui.html")
+				.addResourceLocations("classpath:/METAINF/resources/");
+		registry.addResourceHandler("/webjars/**")
+				.addResourceLocations("classpath:/METAINF/resources/webjars/");
 	}
 	
 }

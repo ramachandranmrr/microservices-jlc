@@ -1,62 +1,49 @@
-package com.jlcindia.userrating;
+package com.jlcindia.rabbitmq;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "mybookratings", schema = "jlcratingsdb")
-//@ApiModel("BookRating Contains bookId,avgRating,numberOfSearches")
-public class BookRating {
+public class BookRatingInfo implements Serializable {
 	
-	@Id
-	@Column(name = "book_id")
+	private static final long serialVersionUID = 1L;
+	
 	private Integer bookId;
-	@Column(name = "avg_rating")
 	private double avgRating;
-	@Column(name = "number_of_searches")
 	private int numberOfSearches;
-
-	public BookRating() {
+	
+	public BookRatingInfo() {
 		super();
 	}
-
-	public BookRating(double avgRating, int numberOfSearches) {
+	
+	public BookRatingInfo(double avgRating, int numberOfSearches) {
 		super();
 		this.avgRating = avgRating;
 		this.numberOfSearches = numberOfSearches;
 	}
-
-	public BookRating(Integer bookId, double avgRating, int numberOfSearches) {
+	
+	public BookRatingInfo(Integer bookId, double avgRating, int numberOfSearches) {
 		super();
 		this.bookId = bookId;
 		this.avgRating = avgRating;
 		this.numberOfSearches = numberOfSearches;
 	}
-
+	
 	public Integer getBookId() {
 		return bookId;
 	}
-
 	public void setBookId(Integer bookId) {
 		this.bookId = bookId;
 	}
-
 	public double getAvgRating() {
 		return avgRating;
 	}
-
 	public void setAvgRating(double avgRating) {
 		this.avgRating = avgRating;
 	}
-
 	public int getNumberOfSearches() {
 		return numberOfSearches;
 	}
-
 	public void setNumberOfSearches(int numberOfSearches) {
 		this.numberOfSearches = numberOfSearches;
 	}
-
+	
 }

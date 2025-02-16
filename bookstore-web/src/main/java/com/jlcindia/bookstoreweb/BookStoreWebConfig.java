@@ -10,7 +10,6 @@ import org.springframework.web.servlet.view.JstlView;
 @SpringBootApplication
 @Configuration
 public class BookStoreWebConfig implements WebMvcConfigurer {
-	
 	@Bean
 	public InternalResourceViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -22,10 +21,8 @@ public class BookStoreWebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/webjars/**")
-				.addResourceLocations("classpath:/META-INF/resources/webjars/"); 
-		registry.addResourceHandler("/mycss/**")
-				.addResourceLocations("classpath:/static/mycss/");
+		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/"); // Corrected line for WebJars
+		registry.addResourceHandler("/mycss/**").addResourceLocations("classpath:/static/mycss/");
 	}
 	
 }

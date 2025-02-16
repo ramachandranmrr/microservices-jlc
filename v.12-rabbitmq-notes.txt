@@ -1,0 +1,30 @@
+
+
+branch: bookstore-rabbitmq (please read README in the branch)
+		notes:
+		- BookSearch
+			- Rabbitmq is not required for bookprice ms becucase bookprice ms is not sending any Async message to any other ms or bookprice ms is not receiving any Async messages from any other  ms
+
+			- booksearch ms receives the bookinventory message from plceorder when order is placed
+			- book search receives the bookrating message from userrating ms whene user gives the rating for any book
+			- so we need  to use ra in booksearch ms
+		PlaceOrder
+			placeorder ms sends the message to booksearch via rabbitmq Asyn
+			placeorder ms receives the message to booksearchweb via rabbitmq Asyn
+		
+		Rating:
+			- userating ms reveives userratinginfo message from booksearchweb via rabbit mq Asyn
+			- userratings ms sends  bookratinginfo messaage to booksearch ms via rabbitmq Asyn
+		- adminserver
+		- bookprice	(v1.1)
+		- booksearch (v1.2) (rabbitmq)		
+		- bookstore-web
+		- placeorder (v1.2) (rabbitmq, RestTemplate-url-port,)
+		- userrating
+			run -  price, search, placeorder, userrating, bookstore-web (jsp)
+		
+		web:
+			bookstoreweb sends the orderfullinfo message to placeorder ms via rabbit mq Asyn
+			
+			bookstoreweb sends the userrathinginfo message to userratingms via rabbitmq Asyn
+		

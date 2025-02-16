@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 @CrossOrigin
 @RestController
 public class BookSearchController {
+
 	static Logger log = LoggerFactory.getLogger(BookSearchController.class);
 	@Autowired
 	BookService bookService;
@@ -37,22 +36,6 @@ public class BookSearchController {
 	public BookInfo getBookById(@PathVariable Integer bookId) {
 		log.info("---BookController---getBookById()-----");
 		return bookService.getBookInfo(bookId);
-	}
-
-	@PutMapping("/updateBookRating")
-	// @ApiOperation(value = " updateBookRating", response = void.class, notes
-	// ="updateBookRating")
-	public void updateBookRating(@RequestBody BookRating bookRating) {
-		System.out.println("-------BookController-----updateBookRating()-----");
-		bookService.updateBookRating(bookRating);
-	}
-
-	@PutMapping("/updateBookInventory")
-	// @ApiOperation(value = " updateBookInventory", response = void.class, notes
-	// ="updateBookInventory")
-	public void updateBookInventory(@RequestBody BookInventory bookInventory) {
-		System.out.println("-------BookController-----updateBookInventory()-----");
-		bookService.updateBookInventory(bookInventory);
 	}
 
 }
