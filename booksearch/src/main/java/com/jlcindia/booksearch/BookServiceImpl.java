@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,7 +15,9 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class BookServiceImpl implements BookService {
+	
 	static Logger log = LoggerFactory.getLogger(BookServiceImpl.class);
+	
 	@Autowired
 	BookInventoryDAO bookInventoryDAO;
 	@Autowired
@@ -61,21 +64,33 @@ public class BookServiceImpl implements BookService {
 		RestTemplate bookPriceRest = new RestTemplate();
 		String endpoint = "http://localhost:9000/bookPrice/" + bookId;
 		BookPriceInfo bpInfo = bookPriceRest.getForObject(endpoint, BookPriceInfo.class);
-		
 		bookInfo.setPrice(bpInfo.getPrice());// 9
 		bookInfo.setOffer(bpInfo.getOffer());// 10
-		
 		return bookInfo;
 	}
 
-	@Override
-	public void updateBookRating(BookRating bookRating) {
+	@RabbitListener(queues = "mybook.ratings.queue")
+	public void updateBookRating(BookRating bookRatingInfo) {
+		
+		System.out.println("BookServiceImpl - updateBookRating");
+		BookRating bookRating= new BookRating();
+		bookRating.setBookId(bookRatingInfo.getBookId());
+		bookRating.setAvgRating(bookRatingInfo.getAvgRating());
+		bookRating.setNumberOfSearches(bookRatingInfo.getNumberOfSearches());
+		
 		bookRatingDAO.save(bookRating);
+		
 	}
 
-	@Override
-	public void updateBookInventory(BookInventory bookInventory) {
+	@RabbitListener(queues = "myinventory.queue")
+	public void updateBookInventory(BookInventory bookInventoryInfo) {
+		System.out.println("BookServiceImpl - updateBookInventory");
+		BookInventory bookInventory= new BookInventory();
+		bookInventory.setBookId(bookInventoryInfo.getBookId());
+		bookInventory.setBooksAvailable(bookInventoryInfo.getBooksAvailable());
+		
 		bookInventoryDAO.save(bookInventory);
+		
 	}
 	
 }
