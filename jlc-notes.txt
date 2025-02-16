@@ -5,10 +5,18 @@ Java17 + spring boot 3.4.2
 master - base code v1.0   
 		- bookprice	(swagger, CORS?, db-schema)
 		- booksearch (swagger, RestTemplate-url-port, dbschema)
-		- bookstore-web (no-swagger, web-config, RestTemplate-url-port, 
+		- bookstore-web (no-swagger, web-config, RestTemplate-url-port) 
 		- placeorder (swagger, RestTemplate-url-port, db-schema)
 		- userrating (swagger, RestTemplate-url-port, db-schema)
 			run -  price, search, placeorder, userrating, bookstore-web (jsp)
 			
-branch: 
+branch: bookstore-actuators-admin v1.1
+		- actuators? count it
+		- bookprice	(added actuator)
+		- booksearch (added actuator)
+		- bookstore-web (added actuator) 
+		- placeorder (added actuator)
+		- userrating (added actuator)
+			run -  price, search, placeorder, userrating, bookstore-web (jsp)
+
 			
