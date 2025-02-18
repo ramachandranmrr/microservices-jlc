@@ -39,7 +39,16 @@ branch: bookstore-rabbitmq v1.2 (please read notes in the branch)
 		- placeorder (v1.2) -  (rabbitmq, RestTemplate-url-port)
 		- userrating (v1.2) - rabbitmq
 			run -  price, search, placeorder, userrating, bookstore-web (jsp)
-			
+
+branch: bookstore-rabbitmq v1.2 (please read notes in the branch)
+		- adminserver
+		- bookprice	(v1.1)
+		- booksearch (v1.2) - rabbitmq
+		- bookstore-web (v1.2) - rabbitmq
+		- placeorder (v1.2) -  (rabbitmq, RestTemplate-url-port)
+		- userrating (v1.2) - rabbitmq
+			run -  price, search, placeorder, userrating, bookstore-web (jsp)
+
 branch: bookstore-feign v1.3 (copy of bookstore-rabbitmq v1.2)
 		- adminserver
 		- bookprice
