@@ -5,54 +5,54 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.web.client.RestTemplate;
 
 @CrossOrigin
 @RestController
 public class BookSearchController {
+
 	static Logger log = LoggerFactory.getLogger(BookSearchController.class);
+	
 	@Autowired
-	BookService bookService;
-
-	@Operation(summary = "Retrieve a book by Id", description = "Get a book object by specifying its id. The response is book object with id, title, description and published status.")
-	@GetMapping("/mybooks/{author}/{category}")
-	// @ApiOperation(value = " getBooks", response = List.class, notes = "Returns
-	// List of Books for given Author and Category")
-	public List<Book> getBooks(@PathVariable String author, @PathVariable String category) {
-		log.info("---BookController---getBooks()-----");
-		System.out.println(author + "\t" + category);
-		return bookService.getBooks(author, category);
-	}
-
+	DiscoveryClient discoveryClient;
+	
 	@GetMapping("/mybook/{bookId}")
-	// @ApiOperation(value = " getBookById", response = BookInfo.class, notes =
-	// "Returns BookInfo for given BID")
 	public BookInfo getBookById(@PathVariable Integer bookId) {
 		log.info("---BookController---getBookById()-----");
-		return bookService.getBookInfo(bookId);
-	}
+		
+		BookInfo bookInfo = new BookInfo();
+		
+		bookInfo.setBookId(bookId);
+		bookInfo.setBookName("Java books");
+		bookInfo.setAuthor("Sriniva Dande");
+		bookInfo.setCategory("Java");
+		bookInfo.setPublications("JLC");
+		
+		//Need to Invoke BookPriceMS
+		// Start Here
+		List<ServiceInstance> instancesList = discoveryClient.getInstances("bookprice");
+		for (ServiceInstance myInstance : instancesList) {
+			System.out.println("Hello : " + myInstance.getUri());
+		}
+		String baseURL = instancesList.get(0).getUri().toString(); // Think On this
 
-	@PutMapping("/updateBookRating")
-	// @ApiOperation(value = " updateBookRating", response = void.class, notes
-	// ="updateBookRating")
-	public void updateBookRating(@RequestBody BookRating bookRating) {
-		System.out.println("-------BookController-----updateBookRating()-----");
-		bookService.updateBookRating(bookRating);
-	}
+		System.out.println("Base URL : " + baseURL);
+		RestTemplate restTemp = new RestTemplate();
+		String apiURL = "/bookPrice/" + bookId;
+		String endpoint = baseURL + apiURL;
 
-	@PutMapping("/updateBookInventory")
-	// @ApiOperation(value = " updateBookInventory", response = void.class, notes
-	// ="updateBookInventory")
-	public void updateBookInventory(@RequestBody BookInventory bookInventory) {
-		System.out.println("-------BookController-----updateBookInventory()-----");
-		bookService.updateBookInventory(bookInventory);
+		ResponseEntity<BookPriceInfo> respEntity = restTemp.getForEntity(endpoint, BookPriceInfo.class);
+		BookPriceInfo bookPriceInfo = respEntity.getBody();
+		
+		return bookInfo;
+		
 	}
 
 }
