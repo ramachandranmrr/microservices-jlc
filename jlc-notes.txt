@@ -49,3 +49,16 @@ branch: bookstore-feign v1.3 (copy of bookstore-rabbitmq v1.2)
 		- userrating
 			run -  price, search, placeorder, userrating, bookstore-web (jsp)
 		- note- eclipse - creating another instance: session14: 40 (time)
+		- problem: url(port), if multiple instance
+		
+master - eurekaserver
+		
+branch: bookstore-eureka v1.4 (copy of bookstore-feign v1.3)
+		- adminserver
+		- bookprice (start2 instances)
+		- booksearch (start2 instances)
+		- bookstore-web 
+		- eurekaserver
+		- placeorder (start2 instances)
+		- userrating (start2 instances)
+		
