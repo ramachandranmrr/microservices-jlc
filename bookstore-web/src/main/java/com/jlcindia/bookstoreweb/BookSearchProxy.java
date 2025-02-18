@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name="booksearch")
 public interface BookSearchProxy {
 
-	@GetMapping("/mybooks/{author}/{category}")
-	public List<Book> getBooks(@PathVariable String author, @PathVariable String category);
+	@GetMapping("/allbooks")
+	public List<String> getAllBooks();
 	
-	@GetMapping("/mybook/{bookId}")
-	public BookInfo getBookById(@PathVariable Integer bookId);
-
+	@GetMapping("/booksByAuthor/{authorName}")
+	public List<String> getBooksByAuthor(@PathVariable String authorName);
 }
