@@ -1,12 +1,11 @@
-package com.jlcindia.booksearch;
+package com.jlcindia.bookprice;
 
 public class BookPriceInfo {
 	private Integer bookId;
 	private double price;
 	private double offer;
-
 	private String serverPort;
-
+	
 	public BookPriceInfo() {
 		super();
 	}
@@ -16,7 +15,7 @@ public class BookPriceInfo {
 		this.price = price;
 		this.offer = offer;
 	}
-
+	
 	public BookPriceInfo(Integer bookId, double price, double offer) {
 		super();
 		this.bookId = bookId;
@@ -29,6 +28,14 @@ public class BookPriceInfo {
 		this.bookId = bookId;
 		this.price = price;
 		this.offer = offer;
+		this.serverPort = serverPort;
+	}
+	
+	public String getServerPort() {
+		return serverPort;
+	}
+
+	public void setServerPort(String serverPort) {
 		this.serverPort = serverPort;
 	}
 
@@ -55,15 +62,5 @@ public class BookPriceInfo {
 	public void setOffer(double offer) {
 		this.offer = offer;
 	}
-
-	public String getServerPort() {
-		return serverPort;
-	}
-
-	public void setServerPort(String serverPort) {
-		this.serverPort = serverPort;
-	}
-	
-	
 
 }
