@@ -2,9 +2,11 @@ package com.jlcindia.userrating;
 
 import java.util.List;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+
+import com.jlcindia.rabbitmq.BookRatingInfo;
 
 import jakarta.transaction.Transactional;
 
@@ -14,10 +16,13 @@ public class RatingServiceImpl implements RatingService {
 	
 	@Autowired
 	BookRatingDAO bookRatingDAO;
+	
 	@Autowired
 	UserRatingDAO userRatingDAO;
 
-	@Override
+	@Autowired
+	private RabbitTemplate rabbitTemplate;
+	
 	public void addUserRating(UserRating userRating) {
 		//1.Add the User Rating
 		userRatingDAO.save(userRating);
@@ -37,10 +42,12 @@ public class RatingServiceImpl implements RatingService {
 		bookRatingDAO.save(bookRating);
 		
 		//4.Update BookRating in BookSearchMS(Remote)
-		//Invoking BookRating-MS
-		RestTemplate bookSearchRest = new RestTemplate();
-		String endpoint = "http://localhost:8000/updateBookRating";
-		bookSearchRest.put(endpoint, bookRating);
+		BookRatingInfo bookRatingInfo=new BookRatingInfo();
+		bookRatingInfo.setBookId(bookRating.getBookId());
+		bookRatingInfo.setAvgRating(bookRating.getAvgRating());
+		bookRatingInfo.setNumberOfSearches(bookRating.getNumberOfSearches());
+		rabbitTemplate.convertAndSend("mybook.search.exchange","mybook.ratings.key", bookRatingInfo);
+	
 	}
 
 	@Override

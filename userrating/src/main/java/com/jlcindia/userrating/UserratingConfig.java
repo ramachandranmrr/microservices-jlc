@@ -1,5 +1,12 @@
 package com.jlcindia.userrating;
 
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Exchange;
+import org.springframework.amqp.core.ExchangeBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -14,6 +21,29 @@ import io.swagger.v3.oas.models.info.License;
 // https://www.bezkoder.com/spring-boot-swagger-3/#google_vignette
 @SpringBootApplication
 public class UserratingConfig implements WebMvcConfigurer {
+
+
+	// UserRating Message
+	// A.UserRating Exchange
+	@Bean(name = "myUserRatingsExchange")
+	Exchange createUserRatingsExchange() {
+		return ExchangeBuilder.topicExchange("myuser.ratings.exchange").build();
+	}
+
+	// B.UserRating Queue
+	@Bean(name = "myUserRatingsQueue")
+	Queue createUserRatingsQueue() {
+		return QueueBuilder.durable("myuser.ratings.queue").build();
+	}
+	
+	// C.UserRating Binding
+	@Bean
+	Binding userRatingBinding(Queue myUserRatingsQueue, TopicExchange myUserRatingsExchange) {
+		return BindingBuilder
+				.bind(myUserRatingsQueue)
+				.to(myUserRatingsExchange)
+				.with("myuser.ratings.key");
+	}
 
 	@Bean
     public OpenAPI customOpenAPI() {
@@ -51,6 +81,7 @@ public class UserratingConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/webjars/**")
 				.addResourceLocations("classpath:/METAINF/resources/webjars/");
 	}
+	
 	
 }
 
