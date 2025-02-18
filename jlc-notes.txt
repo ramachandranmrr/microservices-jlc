@@ -120,3 +120,8 @@ branch: e09-feign-eureka (copy of e06)
 			note:When you use Hoxton Release of Spring Cloud then Ribbon Load Balancer will be used as default.
 			
 
+branch: hystrix (copy of bookstore-eureka v1.4)
+		- booksearch
+		- bookstoreweb
+		- erukaserver
+		
