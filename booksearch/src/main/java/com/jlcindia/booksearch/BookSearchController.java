@@ -21,7 +21,7 @@ public class BookSearchController {
 	static Logger log = LoggerFactory.getLogger(BookSearchController.class);
 	
 	@Autowired
-	DiscoveryClient discoveryClient;
+	RestTemplate restTemp;
 	
 	@GetMapping("/mybook/{bookId}")
 	public BookInfo getBookById(@PathVariable Integer bookId) {
@@ -36,20 +36,19 @@ public class BookSearchController {
 		bookInfo.setPublications("JLC");
 		
 		//Need to Invoke BookPriceMS
+		// Need to Invoke BookPriceMS
 		// Start Here
-		List<ServiceInstance> instancesList = discoveryClient.getInstances("bookprice");
-		for (ServiceInstance myInstance : instancesList) {
-			System.out.println("Hello : " + myInstance.getUri());
-		}
-		String baseURL = instancesList.get(0).getUri().toString(); // Think On this
-
-		System.out.println("Base URL : " + baseURL);
-		RestTemplate restTemp = new RestTemplate();
+		
+		String baseURL ="http://bookprice";
 		String apiURL = "/bookPrice/" + bookId;
 		String endpoint = baseURL + apiURL;
-
-		ResponseEntity<BookPriceInfo> respEntity = restTemp.getForEntity(endpoint, BookPriceInfo.class);
+		ResponseEntity<BookPriceInfo> respEntity = restTemp.getForEntity(endpoint,
+		BookPriceInfo.class);
 		BookPriceInfo bookPriceInfo = respEntity.getBody();
+		bookInfo.setPrice(bookPriceInfo.getPrice());
+		bookInfo.setOffer(bookPriceInfo.getOffer());
+		bookInfo.setServerPort(bookPriceInfo.getServerPort());
+		// End Here
 		
 		return bookInfo;
 		

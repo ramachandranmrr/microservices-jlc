@@ -5,6 +5,8 @@ public class BookPriceInfo {
 	private double price;
 	private double offer;
 
+	private String serverPort;
+
 	public BookPriceInfo() {
 		super();
 	}
@@ -20,6 +22,14 @@ public class BookPriceInfo {
 		this.bookId = bookId;
 		this.price = price;
 		this.offer = offer;
+	}
+
+	public BookPriceInfo(Integer bookId, double price, double offer, String serverPort) {
+		super();
+		this.bookId = bookId;
+		this.price = price;
+		this.offer = offer;
+		this.serverPort = serverPort;
 	}
 
 	public Integer getBookId() {
@@ -45,5 +55,15 @@ public class BookPriceInfo {
 	public void setOffer(double offer) {
 		this.offer = offer;
 	}
+
+	public String getServerPort() {
+		return serverPort;
+	}
+
+	public void setServerPort(String serverPort) {
+		this.serverPort = serverPort;
+	}
+	
+	
 
 }
