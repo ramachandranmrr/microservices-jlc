@@ -4,16 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.info.Info;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 // https://www.bezkoder.com/swagger-3-annotations/
 // http://localhost:8000/swagger-ui/index.html
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Book API", version = "2.0", description = "Book Information"))
+@EnableFeignClients
 public class BookSearchApplication {
-
 	static Logger log = LoggerFactory.getLogger(BookSearchApplication.class);
 
 	public static void main(String[] args) {
