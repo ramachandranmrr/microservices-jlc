@@ -62,3 +62,52 @@ branch: bookstore-eureka v1.4 (copy of bookstore-feign v1.3)
 		- placeorder (start2 instances)
 		- userrating (start2 instances)
 		
+branch: e01-resttemplate (copy of base code v1.0)
+		- bookprice  (create 3 instances)
+		- booksearch (http://localhost:9000)
+			issue - 1. code, 2. hard-coding the url, scale is BIG problem
+
+branch: e02-feign (copy of e01-resttemplate)
+		- bookprice  (create 3 instances)
+		- booksearch (http://localhost:9000)
+			issue - 2. hard-coding the url
+
+branch: e03-discovery-client (copy of base code v1.0)
+		- bookprice  (create 3 instances)
+		- booksearch (http://localhost:9000)
+		- eurekaserver
+			- Not using client side Load Balancers - 
+				- Ribbon and Spring Cloud Load Balancer
+	
+branch: e04-load-balancer-backed-resttemplate (copy of e03-discovery-client)
+		- bookprice  (create 3 instances)
+		- booksearch (http://localhost:9000)
+		- eurekaserver
+			- RestTemplate: ms name "http://bookprice" (good for diff instances)
+			- RestTemplate created by Spring Cloud Load Balancer
+			- Default - Spring Cloud Load Balancer	
+	
+branch: e05-load-balancer-client (copy of e04-load-balancer-backed-resttemplate)
+		- bookprice  (create 3 instances)
+		- booksearch (http://localhost:9000)
+		- eurekaserver
+			- RestTemplate removed
+			- Direct - loadBalancerClient.choose()	
+			- e04 and e05 are same
+	
+branch: e06-feign-eureka (copy of e05-load-balancer-client)
+		- bookprice  (create 3 instances)
+		- booksearch (http://localhost:9000)
+		- eurekaserver
+			- solved - code and scalling
+
+brance: e07-load-balancer-backed-resttemplate-eureka (copy of e04)
+branch: e08-load-balancer-client-eureka (copy of e05)
+branch: e09-feign-eureka (copy of e06)
+		
+		a. without-loadbalancer(e01, e02, 03)
+		b. spring-cloud-loadbalancer (e04, e05, e05)
+		c. ribbon-loadbalancer (e07, e08, e09)
+			note:When you use Hoxton Release of Spring Cloud then Ribbon Load Balancer will be used as default.
+			
+
