@@ -1,12 +1,10 @@
 package com.jlcindia.booksearch;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +19,7 @@ public class BookSearchController {
 	static Logger log = LoggerFactory.getLogger(BookSearchController.class);
 	
 	@Autowired
-	RestTemplate restTemp;
+	LoadBalancerClient loadBalancerClient;
 	
 	@GetMapping("/mybook/{bookId}")
 	public BookInfo getBookById(@PathVariable Integer bookId) {
@@ -35,19 +33,25 @@ public class BookSearchController {
 		bookInfo.setCategory("Java");
 		bookInfo.setPublications("JLC");
 		
-		//Need to Invoke BookPriceMS
 		// Need to Invoke BookPriceMS
 		// Start Here
 		
-		String baseURL ="http://bookprice";
+		ServiceInstance instance = loadBalancerClient.choose("bookprice");
+		String baseURL=instance.getUri().toString();
+		System.out.println("Base URL : "+ baseURL);
 		String apiURL = "/bookPrice/" + bookId;
 		String endpoint = baseURL + apiURL;
-		ResponseEntity<BookPriceInfo> respEntity = restTemp.getForEntity(endpoint,
-		BookPriceInfo.class);
+		
+		RestTemplate restTemp=new RestTemplate();
+		ResponseEntity<BookPriceInfo> respEntity = 
+						restTemp.getForEntity(endpoint, BookPriceInfo.class);
+		
 		BookPriceInfo bookPriceInfo = respEntity.getBody();
+		
 		bookInfo.setPrice(bookPriceInfo.getPrice());
 		bookInfo.setOffer(bookPriceInfo.getOffer());
 		bookInfo.setServerPort(bookPriceInfo.getServerPort());
+
 		// End Here
 		
 		return bookInfo;
