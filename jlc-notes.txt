@@ -114,5 +114,13 @@ branch: hystrix (copy of bookstore-eureka v1.4)
 		- booksearch
 		- bookstoreweb
 		- erukaserver
+
+master - zuul-gateway
+	
+branch: zuul-demo (copy of e06-feign-eureka)
+		- bookprice
+		- booksearch
+		- eurekaserver
+		- zuul-gateway
 			
 
