@@ -10,14 +10,14 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 // http://localhost:9000/swagger-ui/index.html
 @SpringBootApplication
 @EnableDiscoveryClient
-public class BookPriceApplication {
+public class BookpriceApplication {
 
-	static Logger log = LoggerFactory.getLogger(BookPriceApplication.class);
+	static Logger log = LoggerFactory.getLogger(BookpriceApplication.class);
 
 	public static void main(String[] args) {
 		log.info(" BookPriceMS - Begin ");
-		SpringApplication.run(BookPriceApplication.class, args);
-		log.info("\n\n BookPriceMS - started... ");
+		SpringApplication.run(BookpriceApplication.class, args);
+		log.info(" BookPriceMS - started... ");
 	}
 
 }

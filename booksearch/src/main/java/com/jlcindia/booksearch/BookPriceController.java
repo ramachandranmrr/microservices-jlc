@@ -1,4 +1,4 @@
-package com.jlcindia.bookprice;
+package com.jlcindia.booksearch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +15,13 @@ public class BookPriceController {
 	static Logger log = LoggerFactory.getLogger(BookPriceController.class);
 	
 	@Value("${server.port}")
-	String bookPriceServerPort;
+	String serverPort;
+	
 	
 	@GetMapping("/bookPrice/{bookId}")
 	public BookPriceInfo getBookPrice(@PathVariable Integer bookId) {
-		log.info("---BookPriceController---getBookPrice()----- " +bookPriceServerPort);
-		BookPriceInfo bookPriceInfo = new BookPriceInfo(bookId, 5000, 20, bookPriceServerPort);
+		log.info("---BookPriceController---getBookPrice()----- " +serverPort);
+		BookPriceInfo bookPriceInfo = new BookPriceInfo(bookId, 5000, 20, serverPort);
 		
 		return bookPriceInfo;
 	}

@@ -4,7 +4,7 @@ public class BookPriceInfo {
 	private Integer bookId;
 	private double price;
 	private double offer;
-	private String serverPort;
+	private String bookPriceServerPort;
 	
 	public BookPriceInfo() {
 		super();
@@ -23,20 +23,21 @@ public class BookPriceInfo {
 		this.offer = offer;
 	}
 
-	public BookPriceInfo(Integer bookId, double price, double offer, String serverPort) {
+	public BookPriceInfo(Integer bookId, double price, double offer, String bookPriceServerPort) {
 		super();
 		this.bookId = bookId;
 		this.price = price;
 		this.offer = offer;
-		this.serverPort = serverPort;
+		this.bookPriceServerPort = bookPriceServerPort;
 	}
 	
-	public String getServerPort() {
-		return serverPort;
+
+	public String getBookPriceServerPort() {
+		return bookPriceServerPort;
 	}
 
-	public void setServerPort(String serverPort) {
-		this.serverPort = serverPort;
+	public void setBookPriceServerPort(String bookPriceServerPort) {
+		this.bookPriceServerPort = bookPriceServerPort;
 	}
 
 	public Integer getBookId() {

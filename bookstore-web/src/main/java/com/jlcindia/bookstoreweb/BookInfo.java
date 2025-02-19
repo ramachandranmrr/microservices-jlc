@@ -1,22 +1,25 @@
 package com.jlcindia.bookstoreweb;
 
 public class BookInfo {
+	
 	private Integer bookId;
 	private String bookName;
 	private String author;
 	private String publications;
 	private String category;
 	private double price;
-	private int offer;
-	private double avgRating;
-	private int numberOfSearches;
-
+	private double offer;
+	private String bookSearchServerPort;
+	private String bookPriceServerPort;
+	private String bookStoreServerPort;
+	
+	
 	public BookInfo() {
 		super();
 	}
 
-	public BookInfo(String bookName, String author, String publications, String category, double price, int offer,
-			double avgRating, int numberOfSearches) {
+	public BookInfo(String bookName, String author, String publications, String category, double price, double offer,
+			String bookSearchServerPort, String bookPriceServerPort, String bookStoreServerPort) {
 		super();
 		this.bookName = bookName;
 		this.author = author;
@@ -24,12 +27,13 @@ public class BookInfo {
 		this.category = category;
 		this.price = price;
 		this.offer = offer;
-		this.avgRating = avgRating;
-		this.numberOfSearches = numberOfSearches;
+		this.bookSearchServerPort = bookSearchServerPort;
+		this.bookPriceServerPort = bookPriceServerPort;
+		this.bookStoreServerPort = bookStoreServerPort;
 	}
 
 	public BookInfo(Integer bookId, String bookName, String author, String publications, String category, double price,
-			int offer, double avgRating, int numberOfSearches) {
+			double offer, String bookSearchServerPort, String bookPriceServerPort, String bookStoreServerPort) {
 		super();
 		this.bookId = bookId;
 		this.bookName = bookName;
@@ -38,80 +42,110 @@ public class BookInfo {
 		this.category = category;
 		this.price = price;
 		this.offer = offer;
-		this.avgRating = avgRating;
-		this.numberOfSearches = numberOfSearches;
+		this.bookSearchServerPort = bookSearchServerPort;
+		this.bookPriceServerPort = bookPriceServerPort;
+		this.bookStoreServerPort = bookStoreServerPort;
 	}
 
 	public Integer getBookId() {
 		return bookId;
 	}
 
+
 	public void setBookId(Integer bookId) {
 		this.bookId = bookId;
 	}
+
 
 	public String getBookName() {
 		return bookName;
 	}
 
+
 	public void setBookName(String bookName) {
 		this.bookName = bookName;
 	}
+
 
 	public String getAuthor() {
 		return author;
 	}
 
+
 	public void setAuthor(String author) {
 		this.author = author;
 	}
+
 
 	public String getPublications() {
 		return publications;
 	}
 
+
 	public void setPublications(String publications) {
 		this.publications = publications;
 	}
+
 
 	public String getCategory() {
 		return category;
 	}
 
+
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
 
 	public double getPrice() {
 		return price;
 	}
 
+
 	public void setPrice(double price) {
 		this.price = price;
 	}
 
-	public int getOffer() {
+
+	public double getOffer() {
 		return offer;
 	}
 
-	public void setOffer(int offer) {
+
+	public void setOffer(double offer) {
 		this.offer = offer;
 	}
 
-	public double getAvgRating() {
-		return avgRating;
+
+	public String getBookSearchServerPort() {
+		return bookSearchServerPort;
 	}
 
-	public void setAvgRating(double avgRating) {
-		this.avgRating = avgRating;
+
+	public void setBookSearchServerPort(String bookSearchServerPort) {
+		this.bookSearchServerPort = bookSearchServerPort;
 	}
 
-	public int getNumberOfSearches() {
-		return numberOfSearches;
+
+	public String getBookPriceServerPort() {
+		return bookPriceServerPort;
 	}
 
-	public void setNumberOfSearches(int numberOfSearches) {
-		this.numberOfSearches = numberOfSearches;
+
+	public void setBookPriceServerPort(String bookPriceServerPort) {
+		this.bookPriceServerPort = bookPriceServerPort;
 	}
 
+
+	public String getBookStoreServerPort() {
+		return bookStoreServerPort;
+	}
+
+
+	public void setBookStoreServerPort(String bookStoreServerPort) {
+		this.bookStoreServerPort = bookStoreServerPort;
+	}
+	
+
+	
 }
