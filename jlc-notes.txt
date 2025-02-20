@@ -123,4 +123,10 @@ branch: zuul-demo (copy of e06-feign-eureka)
 		- eurekaserver
 		- zuul-gateway
 			
+branch: elk-stack-demo (copy of e06-feign-eureka)
+		- bookprice 
+		- booksearch
+		- eurekaserver
+		
+
 
