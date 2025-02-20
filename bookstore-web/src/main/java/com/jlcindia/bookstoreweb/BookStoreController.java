@@ -10,24 +10,30 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class BookStoreController {
-	static Logger log = LoggerFactory.getLogger(BookStoreController.class);
+	
+	//Create the logger Instance
+	static Logger logger = LoggerFactory.getLogger(BookStoreController.class);
+	
 	@Autowired
 	BookStoreService bookStoreService;
 	private Map<Integer, Book> mycartMap = new LinkedHashMap<>();
 
 	@GetMapping("/")
 	public String showIndexPage(Model model, HttpSession session) {
-		System.out.println("** showIndexPage **");
+		logger.info("** showIndexPage **");
 		List<String> authorsList = bookStoreService.getAuthorsList();
 		List<String> catList = bookStoreService.getCategoryList();
 		session.setAttribute("MyAuthorList", authorsList);
@@ -37,7 +43,7 @@ public class BookStoreController {
 
 	@GetMapping("/showAllBooks")
 	public String showBooksList(HttpServletRequest request, HttpSession session) {
-		System.out.println("-------BookStoreController--showBooksList()---------");
+		logger.info("-------BookStoreController--showBooksList()---------");
 		String author = request.getParameter("author");
 		String category = request.getParameter("category");
 		System.out.println(author);
@@ -51,7 +57,7 @@ public class BookStoreController {
 	@GetMapping("/showBookInfo")
 	public String showBookFullInfo(@RequestParam("bookId") String bookId, HttpSession session,
 			HttpServletRequest request) {
-		System.out.println("-------BookStoreController--showBookFullInfo()---------");
+		logger.info("-------BookStoreController--showBookFullInfo()---------");
 		BookInfo bookInfo = bookStoreService.getBookInfoByBookId(new Integer(bookId));
 		request.setAttribute("MyBookInfo", bookInfo);
 		return "showBookInfo";
@@ -59,7 +65,7 @@ public class BookStoreController {
 
 	@PostMapping("/addToCart")
 	public String addBookToCart(@RequestParam("bookId") String bookId, HttpSession session) {
-		System.out.println("-------BookStoreController--addBookToCart()---------");
+		logger.info("-------BookStoreController--addBookToCart()---------");
 		System.out.println(bookId);
 		Book mybook = bookStoreService.getBookByBookId(new Integer(bookId));
 		mycartMap.put(new Integer(bookId), mybook);

@@ -12,29 +12,31 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @CrossOrigin // CORS
 @RestController
 public class RatingController {
-	static Logger log = LoggerFactory.getLogger(RatingController.class);
+
+	//Create the logger Instance
+	static Logger logger = LoggerFactory.getLogger(RatingController.class);
+	
 	@Autowired
 	RatingService ratingService;
 
 	@PutMapping("/addUserRating")
 	public void addUserRating(@RequestBody UserRating userRating) {
-		log.info("---RatingController---addUserRating()-----");
+		logger.info("---RatingController---addUserRating()-----");
 		ratingService.addUserRating(userRating);
 	}
 
 	@GetMapping("/userRatings/{userId}")
 	public List<UserRating> getUserRatingByUserId(@PathVariable String userId) {
-		log.info("---RatingController---getUserRatingByUserId()-----");
+		logger.info("---RatingController---getUserRatingByUserId()-----");
 		return ratingService.getUserRatingByUserId(userId);
 	}
 
 	@GetMapping("/bookRatings/{bookId}")
 	public BookRating getBookRatingByBookId(@PathVariable String bookId) {
-		log.info("---RatingController---getBookRatingByBookId()-----");
+		logger.info("---RatingController---getBookRatingByBookId()-----");
 		return ratingService.getBookRatingByBookId(Integer.parseInt(bookId));
 	}
 	

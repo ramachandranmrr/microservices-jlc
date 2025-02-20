@@ -18,7 +18,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @CrossOrigin // CORS
 @RestController
 public class PlaceOrderController {
-	static Logger log = LoggerFactory.getLogger(PlaceOrderController.class);
+
+	//Create the logger Instance
+	static Logger logger = LoggerFactory.getLogger(PlaceOrderController.class);
 	
 	@Autowired
 	OrderService orderService;
@@ -26,14 +28,14 @@ public class PlaceOrderController {
 	@PostMapping("/placeOrder")
 //@ApiOperation(value = " placeOrder", response = void.class, notes = "placeOrder")
 	public void placeOrder(@RequestBody OrderInfo orderInfo) {
-		log.info("---OrderController---placeOrder()-----");
+		logger.info("---OrderController---placeOrder()-----");
 		orderService.placeOrder(orderInfo);
 	}
 
 	@GetMapping("/myorders/{userId}")
 // @ApiOperation(value = " getOrdersByUserId", response = List.class, notes = "Return Orders belongs User")
 	public List<Order> getOrdersByUserId(@PathVariable String userId) {
-		log.info("---OrderController---getOrdersByUserId()-----");
+		logger.info("---OrderController---getOrdersByUserId()-----");
 		List<Order> myoders = orderService.getOrdersByUserId(userId);
 		return myoders;
 	}

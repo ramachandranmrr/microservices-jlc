@@ -17,7 +17,10 @@ import io.swagger.v3.oas.annotations.Operation;
 @CrossOrigin
 @RestController
 public class BookSearchController {
-	static Logger log = LoggerFactory.getLogger(BookSearchController.class);
+	
+	//Create the logger Instance
+	static Logger mylogger = LoggerFactory.getLogger(BookSearchController.class);
+	
 	@Autowired
 	BookService bookService;
 
@@ -26,7 +29,7 @@ public class BookSearchController {
 	// @ApiOperation(value = " getBooks", response = List.class, notes = "Returns
 	// List of Books for given Author and Category")
 	public List<Book> getBooks(@PathVariable String author, @PathVariable String category) {
-		log.info("---BookController---getBooks()-----");
+		mylogger.info("---BookController---getBooks()-----");
 		System.out.println(author + "\t" + category);
 		return bookService.getBooks(author, category);
 	}
@@ -35,7 +38,7 @@ public class BookSearchController {
 	// @ApiOperation(value = " getBookById", response = BookInfo.class, notes =
 	// "Returns BookInfo for given BID")
 	public BookInfo getBookById(@PathVariable Integer bookId) {
-		log.info("---BookController---getBookById()-----");
+		mylogger.info("---BookController---getBookById()-----");
 		return bookService.getBookInfo(bookId);
 	}
 
