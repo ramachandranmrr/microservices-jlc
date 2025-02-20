@@ -1,11 +1,11 @@
-package com.jlcindia.booksearch;
+package com.jlcindia.bookstoreweb;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-//@FeignClient(name="bookprice",url = "http://localhost:9000")
-@FeignClient("bookprice")
+// @FeignClient(name="bookstore",url = "http://localhost:5000")
+@FeignClient(name="bookstore")
 public interface BookPriceProxy {
 	
 	@GetMapping("/bookPrice/{bookId}")
@@ -13,5 +13,5 @@ public interface BookPriceProxy {
 	
 	@GetMapping("/offeredPrice/{bookId}")
 	public double getOfferedPrice(@PathVariable Integer bookId);
-		
+
 }

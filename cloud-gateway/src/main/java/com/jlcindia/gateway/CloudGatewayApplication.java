@@ -1,19 +1,26 @@
 package com.jlcindia.gateway;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-@EnableEurekaClient
-@EnableHystrix
+@EnableDiscoveryClient
+@EnableFeignClients
 public class CloudGatewayApplication {
 
+	//Create the logger Instance
+	static Logger logger = LoggerFactory.getLogger(CloudGatewayApplication.class);
+
 	public static void main(String[] args) {
-		
 		SpringApplication.run(CloudGatewayApplication.class, args);
 		
+		//Log the message
+		logger.info("---CloudGatewayApplication-----");
+
 	}
 
 }

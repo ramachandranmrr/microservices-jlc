@@ -30,6 +30,9 @@ public class BookStoreServiceImpl implements BookStoreService {
 	RabbitTemplate rabbitTemplate;
 	
 	@Autowired
+	BookPriceProxy bookPriceProxy;
+	
+	@Autowired
 	BookSearchProxy bookSearchProxy;
 	
 	@Autowired
@@ -91,7 +94,7 @@ public class BookStoreServiceImpl implements BookStoreService {
 		for (Book mybook : mycartMap.values()) {
 			Integer bookId = mybook.getBookId();
 			// Invoke BookPriceMS Rest API with Feign
-			double offerPrice = bookSearchProxy.getOfferedPrice(bookId);
+			double offerPrice = bookPriceProxy.getOfferedPrice(bookId);
 			OrderItemInfo item = new OrderItemInfo(0, bookId, 1, offerPrice);
 			itemList.add(item);
 			totalPrice = totalPrice + offerPrice;

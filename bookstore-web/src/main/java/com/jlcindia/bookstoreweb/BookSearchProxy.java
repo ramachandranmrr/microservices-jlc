@@ -7,19 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 // @FeignClient(name="booksearch",url = "http://localhost:8000")
-@FeignClient(name="zuulgateway")
+@FeignClient(name="booksearch")
 public interface BookSearchProxy {
 
-	@GetMapping("/book-price/bookPrice/{bookId}")
-	public BookPriceInfo getBookPrice(@PathVariable Integer bookId);
-	
-	@GetMapping("/book-price/offeredPrice/{bookId}")
-	public double getOfferedPrice(@PathVariable Integer bookId);
-	
-	@GetMapping("/book-price/mybooks/{author}/{category}")
+	@GetMapping("/mybooks/{author}/{category}")
 	public List<Book> getBooks(@PathVariable String author, @PathVariable String category);
 	
-	@GetMapping("/book-price/mybook/{bookId}")
+	@GetMapping("/mybook/{bookId}")
 	public BookInfo getBookById(@PathVariable Integer bookId);
 
 }
