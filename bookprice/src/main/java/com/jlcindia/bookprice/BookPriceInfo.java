@@ -63,4 +63,10 @@ public class BookPriceInfo {
 		this.offer = offer;
 	}
 
+	@Override
+	public String toString() {
+		return "BookPriceInfo [bookId=" + bookId + ", price=" + price + ", offer=" + offer + ", serverPort="
+				+ serverPort + "]";
+	}
+	
 }

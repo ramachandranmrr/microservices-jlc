@@ -121,5 +121,12 @@ public class BookInfo {
 	public void setServerPort(String serverPort) {
 		this.serverPort = serverPort;
 	}
+
+
+	@Override
+	public String toString() {
+		return "BookInfo [bookId=" + bookId + ", bookName=" + bookName + ", serverPort=" + serverPort + "]";
+	}
+	
 	
 }

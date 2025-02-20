@@ -1,5 +1,8 @@
 package com.jlcindia.booksearch;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BookSearchController {
 
-	static Logger log = LoggerFactory.getLogger(BookSearchController.class);
+	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	BookPriceProxy bookPriceProxy;
 	
 	@GetMapping("/mybook/{bookId}")
 	public BookInfo getBookById(@PathVariable Integer bookId) {
-		log.info("---BookController---getBookById()-----");
+		logger.info("---BookController---getBookById()-----");
 		
 		BookInfo bookInfo = new BookInfo();
 		
@@ -39,8 +42,29 @@ public class BookSearchController {
 		
 		// End Here
 		
+		logger.info(bookPriceInfo.toString());
+		
 		return bookInfo;
 		
+	}
+	
+	@GetMapping("/mybooks/{author}")
+	public BookInfo getBookByIdAuthor(@PathVariable String author) {
+		logger.info("---BookController---getBookById()-----");
+
+		try {
+			if (1 == 1)
+				throw new ArithmeticException();
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			e.printStackTrace(pw);
+			String myErrorTrace = sw.toString();
+			logger.error("My Exception" + myErrorTrace);
+		}
+		return null;
 	}
 
 }

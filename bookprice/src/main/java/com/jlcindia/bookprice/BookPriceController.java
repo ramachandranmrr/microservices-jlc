@@ -17,13 +17,18 @@ public class BookPriceController {
 	
 static Logger log = LoggerFactory.getLogger(BookPriceController.class);
 	
+	Logger logger = LoggerFactory.getLogger(getClass());
+	
 	@Value("${server.port}")
 	String serverPort;
 	
 	@GetMapping("/bookPrice/{bookId}")
 	public BookPriceInfo getBookPrice(@PathVariable Integer bookId) {
-		log.info("---BookPriceController---getBookPrice()----- " +serverPort);
+		logger.info("---BookPriceController---getBookPrice()----- " +serverPort);
+		
 		BookPriceInfo bookPriceInfo = new BookPriceInfo(bookId, 5000, 20, serverPort);
+		
+		logger.info(bookPriceInfo.toString());
 		
 		return bookPriceInfo;
 	}
