@@ -131,6 +131,16 @@ branch: elk-stack-demo (copy of e06-feign-eureka)
 branch - cloud-gateway 
 
 master - cloud-gateway - merged
+
+branch: cloud-gateway (copy of e06-feign-eureka)
+		- bookprice
+		- booksearch
+		- eurekaserver
+		- cloud-gateway
+		
+		http://localhost:9000/bookPrice/101
+		http://localhost:9191/bookPrice/101
+		http://localhost:9191/mybook/101
 		
 
 
