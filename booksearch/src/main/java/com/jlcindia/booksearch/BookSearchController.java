@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,17 +17,24 @@ public class BookSearchController {
 	
 	static Logger log = LoggerFactory.getLogger(BookSearchController.class);
 	
+	@Value("${server.port}")
+	String searchPort;
+	
+	@Value("${message}")
+	String searchMessage;
+	
 	@GetMapping("/jlcbooks")
-	public List<String> getAllBooks() {
+	public BookInfo getBook() {
 		log.info("---BookSearchController---getAllBooks()---");
-		// Success Case
-		List<String> booksList = new ArrayList<String>();
-		booksList.add("Java");
-		booksList.add("Spring");
-		booksList.add("Spring Boot");
-		booksList.add("Angular");
-		booksList.add("React");
-		return booksList;
+		
+		BookInfo bookInfo=new BookInfo();
+		
+		bookInfo.setBookId(101);
+		bookInfo.setBookName("Master Spring MicroServices");
+		bookInfo.setAuthor("Srinivas Dande");
+		bookInfo.setSearchPort(searchPort);
+		bookInfo.setSearchMessage(searchMessage);
+		return bookInfo;
 	}
 	
 }

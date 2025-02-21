@@ -5,4 +5,4 @@ eureka:
       serviceUrl:
         defaultZone: http://localhost:2345/eureka/
 
-message: "Hello, Umesh"
+message: "Hello, I m from BookStore"
