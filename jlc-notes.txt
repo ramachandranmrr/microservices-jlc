@@ -117,8 +117,31 @@ branch: e09-feign-eureka (copy of e06)
 		a. without-loadbalancer(e01, e02, 03)
 		b. spring-cloud-loadbalancer (e04, e05, e05)
 		c. ribbon-loadbalancer (e07, e08, e09)
-			note:When you use Hoxton Release of Spring Cloud then Ribbon Load Balancer will be used as default.
+			note:When you use Hoxton Release of Spring Cloud then Ribbon Load Balancer will be used as default
+	
+branch: hystrix (copy of bookstore-eureka v1.4)
+		- booksearch
+		- bookstoreweb
+		- erukaserver
+
+master - zuul-gateway
+	
+branch: zuul-demo (copy of e06-feign-eureka)
+		- bookprice
+		- booksearch
+		- eurekaserver
+		- zuul-gateway
 			
+branch: elk-stack-demo (copy of e06-feign-eureka)
+		- bookprice 
+		- booksearch
+		- eurekaserver
+		
+branch - cloud-gateway 
+
+master - cloud-gateway - merged
+		
+
 
 branch: hystrix (copy of bookstore-eureka v1.4)
 		- booksearch
