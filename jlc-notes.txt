@@ -131,6 +131,11 @@ branch: elk-stack-demo (copy of e06-feign-eureka)
 branch - cloud-gateway 
 
 master - cloud-gateway - merged
+
+branch: cloud-gateway-demo (copy of bookstore-eureka v1.4)
+		- booksearch
+		- bookstoreweb
+		- erukaserver
 		
 
 
