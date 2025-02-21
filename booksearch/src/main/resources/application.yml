@@ -1,0 +1,19 @@
+### Spring properties ###
+
+# Service name for user-service
+spring:
+  application:
+    name: booksearch
+    
+  main:
+    banner-mode: off  # Disable the Spring Boot banner in console logs
+
+  # External Configuration (pointing to the config-server for centralized config management)
+  cloud:
+    config:
+      uri:
+      - http://localhost:2345
+
+# HTTP Server Port Configuration
+server:
+  port: 8000

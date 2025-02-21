@@ -1,0 +1,18 @@
+### Spring properties ###
+
+# Service name for user-service
+spring:
+  application:
+    name: bookstore
+    
+  main:
+    banner-mode: off  # Disable the Spring Boot banner in console logs
+
+  cloud:
+    config:
+      uri:
+      - http://localhost:2345
+
+# HTTP Server Port Configuration
+server:
+  port: 5000
