@@ -1,0 +1,52 @@
+eureka:
+    client:
+      fetch-registry: true
+      register-with-eureka: true
+      serviceUrl:
+        defaultZone: http://localhost:2345/eureka/
+
+jlc:
+  book.offer=50
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jlcbookpricedb
+    username: root
+    password: tiger
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    root: INFO
+  pattern:
+    console: "%-5level %logger{36} - %msg%n"
+
+info:
+  app:
+    name: "@project.name@"
+    description: "@project.description@"
+    version: "@project.version@"
+    encoding: "@project.build.sourceEncoding@"
+    java:
+      version: "@java.version@"
+    developer: "Srinivas Dande"
+    company: "Java Learning Center"
+
+
