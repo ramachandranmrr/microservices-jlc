@@ -22,7 +22,7 @@ public class BookStoreController {
 	@Value("${server.port}")
 	String storePort;
 	
-	@Value("${jlc.message:}")
+	@Value("${jlc.message}")
 	String storeMessage;
 
 	@GetMapping("/mybooks")

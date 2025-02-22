@@ -18,7 +18,7 @@ public class BookSearchController {
 	@Value("${server.port}")
 	String searchPort;
 	
-	@Value("${jlc.message:}")
+	@Value("${jlc.message}")
 	String searchMessage;
 	
 	@GetMapping("/jlcbooks")

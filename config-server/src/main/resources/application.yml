@@ -11,8 +11,8 @@ spring:
         git:
           #uri: https://github.com/ramachandranmrr/spring-app-config
           uri: https://github.com/ramachandranmrr/microservices-jlc
-          default-label: cloud-server-demo
-          search-paths: config-repo
+          default-label: cloud-server-demo  # branch name
+          search-paths: config-server/config-repo # project and folder
 
           skipSslValidation: false
           clone-on-start: true

@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-// https://www.bezkoder.com/swagger-3-annotations/
-// http://localhost:5000/showAllBooks
 @SpringBootApplication
 @EnableFeignClients
 @EnableDiscoveryClient

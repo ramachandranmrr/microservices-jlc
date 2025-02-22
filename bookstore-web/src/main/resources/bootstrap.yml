@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: bookstore
+  
+  cloud:
+    config:
+      uri: http://localhost:2345
