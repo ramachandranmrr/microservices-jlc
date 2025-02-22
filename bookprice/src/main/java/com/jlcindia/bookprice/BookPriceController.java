@@ -41,19 +41,5 @@ public class BookPriceController {
 		return offeredPrice;
 	}
 	
-	
-	 /*@ApiResponses({
-		    @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Tutorial.class), mediaType = "application/json") }),
-		    @ApiResponse(responseCode = "404", description = "The Tutorial with given Id was not found.", content = { @Content(schema = @Schema()) })
-		  }) 
-	
-	@GetMapping("/tutorials")
-	  public ResponseEntity<Map<String, Object>> getAllTutorials(
-	      @Parameter(description = "Search Tutorials by title") @RequestParam(required = false) String title,
-	      @Parameter(description = "Page number, starting from 0", required = true) @RequestParam(defaultValue = "0") int page,
-	      @Parameter(description = "Number of items per page", required = true) @RequestParam(defaultValue = "3") int size) {
-	    
-	  }*/
-	
 }
 

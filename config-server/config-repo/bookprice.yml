@@ -7,3 +7,6 @@ eureka:
 
 jlc:
   message: "Hello, I am from BookSearch"
+  
+  book:
+     offer: 20

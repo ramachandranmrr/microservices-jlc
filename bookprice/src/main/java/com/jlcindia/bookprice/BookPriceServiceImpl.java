@@ -5,11 +5,14 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
 @Service
+@RefreshScope
 @Transactional
 public class BookPriceServiceImpl implements BookPriceService {
 
@@ -17,32 +20,48 @@ public class BookPriceServiceImpl implements BookPriceService {
 	
 	@Autowired
 	BookPriceDAO bookPriceDAO;
+	
+	@Value("${jlc.book.offer}")
+	String myoffer;
 
-	@Override
-	public double getOfferedPriceById(Integer bookId) {
-		log.info("---BookPriceServiceImpl---getOfferedPriceById()-----");
-		double offerPrice = 0.0;
-		Optional<BookPrice> opt = bookPriceDAO.findById(bookId);
-		if (opt.isPresent()) {
-			BookPrice bookPrice = opt.get();
-			double price = bookPrice.getPrice();
-			double offer = bookPrice.getOffer();
-			if (offer <= 0) {
-				return price;
+		@Override
+		public BookPrice getBookPriceById(Integer bookId) {
+			log.info("---BookPriceServiceImpl---getBookPriceById()-----");
+			Optional<BookPrice> bookPriceOpts = bookPriceDAO.findById(bookId);
+			BookPrice bookPrice = null;
+			if (bookPriceOpts.isPresent()) {
+				bookPrice = bookPriceOpts.get();
 			}
-			offerPrice = price - price * offer / 100;
+			int myspecialOffer = Integer.parseInt(myoffer);
+			System.out.println("myspecialOffer : -- " + myspecialOffer);
+			System.out.println("bookPrice.getOffer() : -- " + bookPrice.getOffer());
+			if (myspecialOffer > bookPrice.getOffer()) {
+				bookPrice.setOffer(myspecialOffer);
+			}
+			System.out.println(bookPrice);
+			return bookPrice;
 		}
-		return offerPrice;
-	}
-
-	@Override
-	public BookPrice getBookPriceById(Integer bookId) {
-		log.info("---BookPriceServiceImpl---getBookPriceById()-----");
-		BookPrice bookPrice = null;
-		Optional<BookPrice> opt = bookPriceDAO.findById(bookId);
-		if (opt.isPresent()) {
-			bookPrice = opt.get();
+	
+		@Override
+		public double getOfferedPriceById(Integer bookId) {
+			log.info("---BookPriceServiceImpl---getOfferedPriceById()-----");
+			int myspecialOffer = Integer.parseInt(myoffer);
+			System.out.println("myspecialOffer : -- " + myspecialOffer);
+			Optional<BookPrice> bookPriceOpts = bookPriceDAO.findById(bookId);
+			double offeredPrice = 0.0;
+			if (bookPriceOpts.isPresent()) {
+				BookPrice bookPrice = bookPriceOpts.get();
+				double actualPrice = bookPrice.getPrice();
+				double offer = bookPrice.getOffer();
+				double discountAmount = 0.0;
+				if (myspecialOffer > offer) {
+					discountAmount = actualPrice * myspecialOffer / 100;
+				} else {
+					discountAmount = actualPrice * offer / 100;
+				}
+				offeredPrice = actualPrice - discountAmount;
+			}
+			return offeredPrice;
 		}
-		return bookPrice;
-	}
+	
 }
