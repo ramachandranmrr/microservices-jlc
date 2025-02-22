@@ -6,7 +6,8 @@ eureka:
         defaultZone: http://localhost:2345/eureka/
 
 jlc:
-  book.offer=50
+  book:
+    offer=50
   
 management:
   endpoints:
