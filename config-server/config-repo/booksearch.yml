@@ -6,4 +6,4 @@ eureka:
         defaultZone: http://localhost:2345/eureka/
 
 jlc:
-  message: "Hello, I am from BookSearcg"
+  message: "Hello, I am from BookSearchhh"
