@@ -9,3 +9,11 @@ management:
     web:
       exposure:
         include: "*"
+
+# any name ok but after - (-dev or -mydev)
+# booksearch-dev.properties (Dev Profile)
+# spring.profiles.active=dev
+
+# booksearch-qa.properties (Qa Profile)
+# spring.profiles.active=qa
+
