@@ -1,3 +1,6 @@
+jlc:
+  message: "Hello, I am from BookSearch"
+  
 eureka:
     client:
       fetch-registry: true
@@ -6,7 +9,8 @@ eureka:
         defaultZone: http://localhost:2345/eureka/
 
 jlc:
-  message: "Hello, I am from BookSearch"
+  book:
+    offer: 50
   
 management:
   endpoints:
@@ -16,6 +20,27 @@ management:
   endpoint:
     health:
       show-details: always
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jlcbookdb
+    username: root
+    password: tiger
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    root: INFO
+  pattern:
+    console: "%-5level %logger{36} - %msg%n"
 
 info:
   app:
@@ -27,3 +52,4 @@ info:
       version: "@java.version@"
     developer: "Srinivas Dande"
     company: "Java Learning Center"
+
