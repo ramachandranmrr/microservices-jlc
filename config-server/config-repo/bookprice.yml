@@ -7,7 +7,7 @@ eureka:
 
 jlc:
   book:
-    offer=50
+    offer: 50
   
 management:
   endpoints:
