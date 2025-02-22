@@ -1,5 +1,7 @@
 jlc:
   message: "Hello, I am from BookSearch"
+  book:
+    offer: 50
   
 eureka:
     client:
@@ -7,10 +9,6 @@ eureka:
       register-with-eureka: true
       serviceUrl:
         defaultZone: http://localhost:2345/eureka/
-
-jlc:
-  book:
-    offer: 50
   
 management:
   endpoints:
