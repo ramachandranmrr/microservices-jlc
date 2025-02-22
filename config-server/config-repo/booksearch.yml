@@ -53,3 +53,8 @@ info:
     developer: "Srinivas Dande"
     company: "Java Learning Center"
 
+logging:
+  file:
+    name: D:/mylogs/booksearch.log
+
+
