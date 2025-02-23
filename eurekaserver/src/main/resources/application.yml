@@ -1,0 +1,19 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: discovery
+  config:
+    import: optional:configserver:http://localhost:2345
+
+eureka:
+  client:
+    registerWithEureka: false  # Since it's the server, it doesn't need to register itself
+    fetchRegistry: false
+     
+
+     
+    
+     
+    

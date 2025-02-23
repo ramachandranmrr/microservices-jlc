@@ -1,14 +1,10 @@
-### Spring properties ###
 
-# HTTP Server Port Configuration
-server:
-  port: 8000
+spring:
+  application:
+    name: booksearch
+  config:
+    import: optional:configserver:http://localhost:2345
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
 
 # any name ok but after - (-dev or -mydev)
 # booksearch-dev.properties (Dev Profile)

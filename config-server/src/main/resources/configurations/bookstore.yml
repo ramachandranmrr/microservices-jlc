@@ -1,0 +1,37 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 5000
+
+spring:
+  application:
+    name: bookstore
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jlcbookpricedb
+    username: root
+    password: tiger
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  jlc:
+    message: "Hello, I am from BookStore"
+#application:
+ # config:
+  #  students-url: http://localhost:8222/api/v1/students
+
+#management:
+ # tracing:
+  #  sampling:
+   #   probability: 1.0
