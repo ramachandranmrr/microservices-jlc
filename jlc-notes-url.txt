@@ -1,0 +1,154 @@
+microservices-jlc
+
+Java17 + spring boot 3.4.2
+
+startup Order: 
+--------------
+config-server
+eurekasever
+adminserver
+security-service(gateway) 
+api-gateway (zuul-gateway or cloud-gateway)
+services:
+	bookprice(9000)
+	booksearch(8000)
+	placeorder(7000) 
+	userrating(6500) 
+	bookstore(5000)
+
+- http://localhost:5000/showAllBooks
+- http://localhost:9000/swagger-ui/index.html
+
+mutiple instance: eclipse - creating another instance: session14: 40 (time)
+
+master - base code v1.0   
+		- bookprice	(swagger, CORS?, db-schema)
+		- booksearch (swagger, RestTemplate-url-port, dbschema)
+		- bookstore-web (no-swagger, web-config, RestTemplate-url-port) 
+		- placeorder (swagger, RestTemplate-url-port, db-schema)
+		- userrating (swagger, RestTemplate-url-port, db-schema)
+			
+branch: bookstore-actuators v1.1
+		- bookprice	(actuator) - count it before and after
+		- booksearch (actuator)
+		- bookstore-web (actuator) 
+		- placeorder (actuator)
+		- userrating (actuator)
+
+master - adminserver
+
+branch: bookstore-admin v1.1 (copy master and bookstore-actuators v1.1)
+		- adminserver (spring-boot-admin-starter-server, spring-boot-starter-actuator)
+		- bookprice	(admin-starter-client)
+		- booksearch (admin-starter-client)
+		- bookstore-web
+		- placeorder (admin-starter-client
+		- userrating (admin-starter-client)
+		
+branch: bookstore-rabbitmq v1.2 (copy bookstore-admin v1.1)
+		- adminserver
+		- bookprice
+		- booksearch - rabbitmq
+		- bookstore-web - rabbitmq
+		- placeorder - rabbitmq, RestTemplate-url-port
+		- userrating - rabbitmq
+			
+branch: bookstore-feign v1.3 (copy bookstore-rabbitmq v1.2)
+		- adminserver
+		- bookprice
+		- booksearch (feign, url-port)
+		- bookstore-web (feig, url-port)
+		- placeorder
+		- userrating
+			- problem: url(port), if multiple instance
+		
+master - eurekaserver
+		
+branch: bookstore-eureka v1.4 (copy of bookstore-feign v1.3)
+		- adminserver
+		- bookprice (start2 instances)
+		- booksearch (start2 instances)
+		- bookstore-web 
+		- eurekaserver
+		- placeorder (start2 instances)
+		- userrating (start2 instances)
+		
+branch: e01-resttemplate (copy of base code v1.0)
+		- bookprice  (create 3 instances)
+		- booksearch
+			- problem: 
+			1. code - more lines
+			2. hard-coding the url, scale is BIG problem
+
+branch: e02-feign (copy of e01-resttemplate)
+		- bookprice  (create 3 instances)
+		- booksearch (http://localhost:9000)
+			1. code - more lines - solved
+			- problem: 
+			2. hard-coding the url, scale is BIG problem
+
+branch: e03-discovery-client (copy of base code v1.0)
+		- bookprice  (create 3 instances)
+		- booksearch (http://localhost:9000)
+		- eurekaserver
+			- Not using client side Load Balancers - 
+				- Ribbon and Spring Cloud Load Balancer
+	
+branch: e04-load-balancer-backed-resttemplate (copy of e03-discovery-client)
+		- bookprice  (create 3 instances)
+		- booksearch (http://localhost:9000)
+		- eurekaserver
+			- RestTemplate: ms name "http://bookprice" (good for diff instances)
+			- RestTemplate created by Spring Cloud Load Balancer
+			- Default - Spring Cloud Load Balancer	
+	
+branch: e05-load-balancer-client (copy of e04-load-balancer-backed-resttemplate)
+		- bookprice  (create 3 instances)
+		- booksearch (http://localhost:9000)
+		- eurekaserver
+			- RestTemplate removed
+			- Direct - loadBalancerClient.choose()	
+			- e04 and e05 are same
+	
+branch: e06-feign-eureka (copy of e05-load-balancer-client)
+		- bookprice  (create 3 instances)
+		- booksearch (http://localhost:9000)
+		- eurekaserver
+			- solved - code and scalling
+
+brance: e07-load-balancer-backed-resttemplate-eureka (copy of e04)
+branch: e08-load-balancer-client-eureka (copy of e05)
+branch: e09-feign-eureka (copy of e06)
+		
+		a. without-loadbalancer(e01, e02, 03)
+		b. spring-cloud-loadbalancer (e04, e05, e05)
+		c. ribbon-loadbalancer (e07, e08, e09)
+			note:When you use Hoxton Release of Spring Cloud then Ribbon Load Balancer will be used as default
+	
+branch: hystrix (copy of bookstore-eureka v1.4)
+		- booksearch
+		- bookstoreweb
+		- erukaserver
+
+master - zuul-gateway
+	
+branch: zuul-demo (copy of e06-feign-eureka)
+		- bookprice
+		- booksearch
+		- eurekaserver
+		- zuul-gateway
+			
+branch: elk-stack-demo (copy of e06-feign-eureka)
+		- bookprice 
+		- booksearch
+		- eurekaserver
+		
+branch - cloud-gateway 
+
+master - cloud-gateway - merged
+
+branch: cloud-gateway-demo (copy of bookstore-eureka v1.4)
+		- booksearch
+		- bookstoreweb
+		- erukaserver
+		
