@@ -8,13 +8,13 @@ config-server
 eurekasever
 adminserver
 security-service(gateway) 
-api-gateway (zuul-gateway or cloud-gateway)
 services:
 	bookprice(9000)
 	booksearch(8000)
 	placeorder(7000) 
 	userrating(6500) 
 	bookstore(5000)
+api-gateway (zuul-gateway or cloud-gateway)
 
 - http://localhost:5000/showAllBooks
 - http://localhost:9000/swagger-ui/index.html
@@ -45,7 +45,7 @@ branch: bookstore-admin v1.1 (copy master and bookstore-actuators v1.1)
 		- placeorder (admin-starter-client
 		- userrating (admin-starter-client)
 		
-branch: bookstore-rabbitmq v1.2 (copy bookstore-admin v1.1)
+branch: bookstore-rabbitmq v1.2 (copy of bookstore-admin v1.1)
 		- adminserver
 		- bookprice
 		- booksearch - rabbitmq
@@ -53,7 +53,7 @@ branch: bookstore-rabbitmq v1.2 (copy bookstore-admin v1.1)
 		- placeorder - rabbitmq, RestTemplate-url-port
 		- userrating - rabbitmq
 			
-branch: bookstore-feign v1.3 (copy bookstore-rabbitmq v1.2)
+branch: bookstore-feign v1.3 (copy of bookstore-rabbitmq v1.2)
 		- adminserver
 		- bookprice
 		- booksearch (feign, url-port)
@@ -148,6 +148,11 @@ branch - cloud-gateway
 master - cloud-gateway - merged
 
 branch: cloud-gateway-demo (copy of bookstore-eureka v1.4)
+		- booksearch
+		- bookstoreweb
+		- erukaserver
+
+branch: bookstore-cloud-server-bus-profiles (copy of cloud-gateway-demo)
 		- booksearch
 		- bookstoreweb
 		- erukaserver
