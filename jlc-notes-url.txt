@@ -16,6 +16,9 @@ services:
 	bookstore(5000)
 api-gateway (zuul-gateway or cloud-gateway)
 
+service-name: acc-service, cus-service, 
+discovery-service, gateway-service, zipkin-service
+
 - http://localhost:5000/showAllBooks
 - http://localhost:9000/swagger-ui/index.html
 
@@ -151,6 +154,8 @@ branch: cloud-gateway-demo (copy of bookstore-eureka v1.4)
 		- booksearch
 		- bookstoreweb
 		- erukaserver
+		
+branch: cloud-server
 
 branch: bookstore-cloud-server-bus-profiles (copy of cloud-gateway-demo)
 		- booksearch
