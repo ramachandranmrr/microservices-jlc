@@ -137,5 +137,14 @@ branch: cloud-gateway-demo (copy of bookstore-eureka v1.4)
 		- bookstoreweb
 		- erukaserver
 		
+branch: cloud-server
+
+branch: bookstore-cloud-server-bus-profiles (copy of cloud-gateway-demo)
+		- booksearch
+		- bookstoreweb
+		- erukaserver
+		
+branch: zipkin-service
+		
 
 

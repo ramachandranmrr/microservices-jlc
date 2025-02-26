@@ -162,3 +162,5 @@ branch: bookstore-cloud-server-bus-profiles (copy of cloud-gateway-demo)
 		- bookstoreweb
 		- erukaserver
 		
+branch: zipkin-service
+		
