@@ -5,17 +5,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// https://www.bezkoder.com/swagger-3-annotations/
 // http://localhost:5000/showAllBooks
 @SpringBootApplication
-public class BookStoreWebApplication {
+public class BookStoreApplication {
 
-	static Logger log = LoggerFactory.getLogger(BookStoreWebApplication.class);
+	static Logger log = LoggerFactory.getLogger(BookStoreApplication.class);
 
 	public static void main(String[] args) {
-		log.info(" BookStoreWeb - Begin ");
-		SpringApplication.run(BookStoreWebApplication.class, args);
-		log.info(" BookStoreWeb - started... ");
+		
+		log.info(" BookStore - Begin ");
+		SpringApplication.run(BookStoreApplication.class, args);
+		
+		log.info(" BookStore - started... ");
 	}
 
 }
