@@ -29,11 +29,11 @@ public class BookStoreController {
 
     @GetMapping
     public Collection<Book> getBooks() {
-        return bookStoreService.getAllBooks();
+        return bookStoreService.getBooks();
     }
 
     @GetMapping("/{bookId}")
-    public Book getBookInfo(@PathVariable Integer bookId) {
+    public Book getBookById(@PathVariable Integer bookId) {
         return bookStoreService.getBookById(bookId);
     }
     

@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface BookStoreService {
 	
-    List<Book> getAllBooks();
+    List<Book> getBooks();
     
     Book getBookById(Integer bookId);
     

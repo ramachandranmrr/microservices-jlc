@@ -14,10 +14,10 @@ public class BookStoreServiceImpl implements BookStoreService {
 	static Logger log = LoggerFactory.getLogger(BookStoreServiceImpl.class);
 	
 	@Autowired
-	BookStroreDAO bookStoreDAO ;
+	BookStoreDAO bookStoreDAO ;
 	
 	@Override
-    public List<Book> getAllBooks() {
+    public List<Book> getBooks() {
         return bookStoreDAO.findAll();
     }
 
