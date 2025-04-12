@@ -8,6 +8,8 @@ zuul-gateway/bin
 eurekaserver/bin
 config-server/bin
 cloud-gateway/bin
+adminserver/bin
+zipkin-service/bin
 
 mvnw
 mvnw.cmd
