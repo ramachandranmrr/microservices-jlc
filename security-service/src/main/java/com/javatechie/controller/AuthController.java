@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+	
     @Autowired
     private AuthService service;
 
@@ -38,4 +39,5 @@ public class AuthController {
         service.validateToken(token);
         return "Token is valid";
     }
+    
 }
