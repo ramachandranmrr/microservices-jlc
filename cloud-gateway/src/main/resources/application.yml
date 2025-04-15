@@ -4,16 +4,55 @@
 server:
   port: 9191
   address: localhost    
-  
-# Discovery Server Access
-#eureka:
-#    client:
-#      register-with-eureka: true
-#      fetch-registry: true
-#      serviceUrl:
-#        defaultZone: http://localhost:8761/eureka/
-     
 
+spring:
+  application:
+    name: apigateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true   # Enables routing via Eureka service names
+          lower-case-service-id: true
+      routes:
+        - id: booksearch-service
+          uri: lb://booksearch
+          predicates:
+            - Path=/booksearch/**
+          filters:
+            - AuthenticationFilter
+
+        - id: bookprice-service
+          uri: lb://bookprice
+          predicates:
+            - Path=/bookprice/**
+          filters:
+            - AuthenticationFilter
+
+        - id: security-service
+          uri: lb://security-service
+          predicates:
+            - Path=/auth/**
+ 
+# Discovery Server Access
+eureka:
+    client:
+      register-with-eureka: true
+      fetch-registry: true
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+     
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
      
     
      

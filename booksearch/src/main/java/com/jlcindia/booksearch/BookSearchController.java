@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.swagger.v3.oas.annotations.Operation;
 
 @CrossOrigin
@@ -32,6 +33,7 @@ public class BookSearchController {
 	}
 
 	@GetMapping("/mybook/{bookId}")
+	@CircuitBreaker(name = "bookpriceService", fallbackMethod = "fallbackBookPrice")
 	// @ApiOperation(value = " getBookById", response = BookInfo.class, notes =
 	// "Returns BookInfo for given BID")
 	public BookInfo getBookById(@PathVariable Integer bookId) {
@@ -53,6 +55,14 @@ public class BookSearchController {
 	public void updateBookInventory(@RequestBody BookInventory bookInventory) {
 		System.out.println("-------BookController-----updateBookInventory()-----");
 		bookService.updateBookInventory(bookInventory);
+	}
+
+	public BookPriceInfo fallbackBookPrice(String bookId, Throwable t) {
+		BookPriceInfo fallback = new BookPriceInfo();
+		fallback.setBookId(101);
+		fallback.setPrice(0.0);
+		fallback.setOffer(100d);
+		return fallback;
 	}
 
 }

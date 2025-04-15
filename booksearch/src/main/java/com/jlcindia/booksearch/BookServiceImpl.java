@@ -21,6 +21,9 @@ public class BookServiceImpl implements BookService {
 	BookRatingDAO bookRatingDAO;
 	@Autowired
 	BookDAO bookDAO;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Override
 	public List<Book> getBooks(String author, String category) {
@@ -58,9 +61,10 @@ public class BookServiceImpl implements BookService {
 		bookInfo.setBooksAvailable(bookInventory.getBooksAvailable());// 8
 		
 		// 4.Book Price Details – Invoking BookPriceMS
-		RestTemplate bookPriceRest = new RestTemplate();
-		String endpoint = "http://localhost:9000/bookPrice/" + bookId;
-		BookPriceInfo bpInfo = bookPriceRest.getForObject(endpoint, BookPriceInfo.class);
+		//RestTemplate bookPriceRest = new RestTemplate();
+		// String endpoint = "http://localhost:9000/bookPrice/" + bookId;
+		String endpoint = "http://bookprice/bookPrice/" + bookId; // uses service name from Eureka
+		BookPriceInfo bpInfo = restTemplate.getForObject(endpoint, BookPriceInfo.class);
 		
 		bookInfo.setPrice(bpInfo.getPrice());// 9
 		bookInfo.setOffer(bpInfo.getOffer());// 10

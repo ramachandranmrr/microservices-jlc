@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.2</version>
+		<version>3.2.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	
@@ -34,6 +34,31 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-spring-boot2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-all</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -76,19 +101,17 @@
 		<dependency>
 			<groupId>jakarta.transaction</groupId>
 			<artifactId>jakarta.transaction-api</artifactId>
-			<version>2.0.0</version>
 		</dependency>
 		
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+
 		<dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-    </dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -131,6 +154,19 @@
 		</dependency>
 		
 	</dependencies>
+
+	<dependencyManagement>
+	    <dependencies>
+	        <dependency>
+	            <groupId>org.springframework.cloud</groupId>
+	            <artifactId>spring-cloud-dependencies</artifactId>
+	            <version>2023.0.0</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+	    </dependencies>
+	</dependencyManagement>
+
 
 	<build>
 		<finalName>booksearch</finalName>
