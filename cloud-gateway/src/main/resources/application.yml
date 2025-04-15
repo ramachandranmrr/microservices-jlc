@@ -20,14 +20,14 @@ spring:
           predicates:
             - Path=/booksearch/**
           filters:
-            - AuthenticationFilter
+            - name: AuthenticationFilter
 
         - id: bookprice-service
           uri: lb://bookprice
           predicates:
             - Path=/bookprice/**
           filters:
-            - AuthenticationFilter
+            - name: AuthenticationFilter
 
         - id: security-service
           uri: lb://security-service
