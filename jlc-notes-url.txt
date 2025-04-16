@@ -163,4 +163,21 @@ branch: bookstore-cloud-server-bus-profiles (copy of cloud-gateway-demo)
 		- erukaserver
 		
 branch: zipkin-service
+
+http://localhost:8000/swagger-ui/index.html
+branch: cloud-gateway-circuitbreaker (copy of cloud-gateway-demo)
+		- erukaserver
+		- booksearch
+		- bookstoreweb
+		- cloud-gateway
+		
+java --add-opens java.base/java.lang=ALL-UNNAMED -jar zipkin-server-2.9.4-exec.jar
+http://localhost:9411/zipkin/ 
+
+http://localhost:8000/swagger-ui/index.html
+branch: cloud-gateway-circuitbreaker (copy of cloud-gateway-demo)
+		- erukaserver
+		- booksearch
+		- bookstoreweb
+		- cloud-gateway
 		
